@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Login - My Flask App{% endblock %}
+
+{% block content %}
+ <u> <h1>Login</h1></u>
+  <form method="POST" action="{{ url_for('auth.login') }}">
+    <label for="username">Username:</label><br/>
+    <input type="text" id="username" name="username" required/><br/><br/>
+    
+    <label for="password">Password:</label><br/>
+    <input type="password" id="password" name="password" required/><br/><br/>
+    
+    <button type="submit">Log In</button>
+  </form>
+  <p>Not registered? <a href="{{ url_for('auth.signup') }}">Sign up here</a></p>
+{% endblock %}

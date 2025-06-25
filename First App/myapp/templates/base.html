@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}BASE PAGE!!{% endblock  %}</title>
+  {% block link %}{% endblock link %}
+  <!-- Optional: Add any other meta tags or external resources here -->
+</head>
+<body>
+    <style>
+            .flash {
+      padding: 10px 20px;
+      margin: 10px auto;
+      width: fit-content;
+      border-radius: 5px;
+      color: white;
+      font-family: sans-serif;
+      animation: fadeOut 4s forwards;
+    }
+
+    .flash-success { background-color:rgb(27, 208, 33); }  /* Green */
+    .flash-error { background-color: #f44336; }    /* Red */
+    .flash-warning { background-color: #ff9800; }  /* Orange */
+
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+      {% block style %}
+        {% endblock style %}
+    </style>
+  <header><hr>
+    {% block header %}
+        <u><h1>Welcome to My Website</h1></u>
+    <!-- Navigation, logo, etc. -->
+     <!-- templates/base.html -->
+<nav>
+  <a href="{{ url_for('home.index') }}">Home</a> |
+    <a href="{{ url_for('home.members') }}">Members</a> |
+  {% if current_user.is_authenticated %}
+    <a href="{{ url_for('blog.my_blogs') }}">My Blogs</a> |
+    <a href="{{ url_for('todo.index') }}">To-Do List</a> |
+    <a href="{{ url_for('auth.logout') }}">Logout</a>
+    <span style="margin-left:10px;">Welcome, {{ current_user.username }}</span>
+  {% else %}
+    <a href="{{ url_for('auth.login') }}">Login</a>
+  {% endif %}
+</nav>
+
+    {% endblock header %}
+    <hr>
+  </header>
+
+    <!--  FLASH MESSAGES  -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!--  FLASH MESSAGES  -->
+
+
+  <main><hr>
+    {% block content %}
+      <section>
+      <h2>Section Title</h2>
+      <p>This is a paragraph of content.</p>
+    </section>
+    <!-- Add more sections as needed -->
+    {% endblock content %}<hr>
+  </main>
+
+  <footer> <hr>
+    {% block footer %}
+   
+        <p>&copy; 2025 <u>RADHA VALLABH SHRI HARIVANSH</u>. All rights reserved.</p>
+        
+    {% endblock footer %}
+    <hr>
+  </footer>
+
+  <!-- Link to external JavaScript file -->
+   {% block script %}
+   <!--<script src="script.js"></script>
+   -->  
+   {% endblock script %}
+</body>
+</html>

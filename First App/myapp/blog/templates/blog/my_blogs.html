@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<u><h1>My Blogs</h1></u>
+
+<a href="{{ url_for('blog.create_blog') }}">Create New Blog</a>
+<ul>
+  {% for blog in blogs %}<hr>
+  <li>
+    <u><strong>{{ blog.title }}</strong></u>
+    ({{ 'Public' if blog.is_public else 'Private' }})
+    - <a href="{{ url_for('blog.toggle_public', blog_id=blog.id) }}">Toggle Visibility</a>
+    - <a href="{{ url_for('blog.delete_blog', blog_id=blog.id) }}" onclick="return confirm('Delete this blog?')">Delete</a>
+    - <a href="{{ url_for('blog.blog_detail', blog_id=blog.id) }}">View Details</a>
+    <p>{{ blog.content[:500] }}...</p> <!-- Truncate content to 100 characters -->
+  </li><hr>
+  {% endfor %}
+</ul>
+{% endblock %}

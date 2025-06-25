@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block style %}
+<style>
+  ul {
+    max-width: 500px;
+    margin: auto;
+    font-family: sans-serif;
+  }
+
+  li {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 6px;
+    transition: background 0.3s;
+  }
+
+  li:hover {
+    background: #f1f1f1;
+  }
+
+  input[type="checkbox"] {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+</style>{% endblock style %}
+
+{% block content %}
+<h2>📝 My To-Do List</h2>
+
+<form method="post">
+  <input type="text" name="task" placeholder="Add a new task..." required>
+  <button type="submit">Add Task</button>
+</form>
+
+<br>
+
+<ul style="list-style-type: none; padding-left: 0;">
+  {% for todo in todos %}
+    <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+      <!-- Checkbox -->
+      <input type="checkbox" onchange="window.location.href='{{ url_for('todo.toggle', id=todo.id) }}'" {% if todo.done %}checked{% endif %}>
+
+      <!-- Task Text -->
+      <span style="{% if todo.done %}text-decoration: line-through; color: gray{% endif %};">
+        {{ todo.task }}
+      </span>
+
+      <!-- Delete Button -->
+      <a href="{{ url_for('todo.delete', id=todo.id) }}" onclick="return confirm('Delete this task?')">
+        ❌
+      </a>
+    </li>
+  {% else %}
+    <p>You have no tasks yet.</p>
+  {% endfor %}
+</ul>
+{% endblock %}

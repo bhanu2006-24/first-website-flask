@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Members{% endblock %}
+
+{% block content %}
+<u><h1>Registered Members</h1></u>
+<ul>
+  {% for member in members %}
+    <li>{{ member }}</li>
+    {%else%}
+    <p>NO MEMBERS</p>
+  {% endfor %}
+</ul>
+{% endblock %}
